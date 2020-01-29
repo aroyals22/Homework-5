@@ -7,51 +7,38 @@ const m = moment();
 
 $("#currentDay").html("<h2>" + m.format("dddd ll") + "</h2>")
 
-//function to save textContent when user clicks save button
+//function to save Content to localStorage when user clicks save button for any row
 $(".saveBtn").on("click", function(){
 
     var content= $(this).siblings("input").val();
     localStorage.setItem($(this).siblings(".time-block").text(), content)
-    // renderUserInput()
+    });
 
-});
-
-// function renderUserInput(){
-
-// var userContent = localStorage.getItem("content")
-// console.log(userContent);
-// userInputSpan.value = userContent; 
-
-
-
-
-
-
-// }
 //function to change background color of  rows dependent on time of day
 function styleRows(){
-    currentHour="";
-    futureHour="";
-    pastHour="";
     //if statements comparing variables to moment
     //change CSS properties .past/.present/.future
   $(".time-block").each(function(){
+      //confirm correct text
       console.log($(this).text())
-
+      //set text into input field
       var content = localStorage.getItem($(this).text())
+
+
+      //populating text
       if(content){
           $(this).siblings("input").val(content)
       }
+      //creating variables to compare time
       var blockTime = moment($(this).text(),"hh:mm A");
-
-
-
       var currentHour= m.format("hh:mm A");
       var currentTime=moment(currentHour,"hh:mm A")
       console.log(currentHour);
+      
+      
+      //conditionals for background
       if(moment.max(blockTime,currentTime)===blockTime){
-         //used console log to verify max hour (future hour) was correct
-         //once confirmed i assigned respective add class to hour blocks 
+         
         $("input").addClass("future");
           console.log("this is future")
           
@@ -75,4 +62,5 @@ function styleRows(){
  
 }
 // renderUserInput();
+//RUN FUNCTION
 styleRows();
